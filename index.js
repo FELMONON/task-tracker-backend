@@ -1,17 +1,20 @@
+require('dotenv').config(); 
+
+
 const express = require('express');
-const cors = require('cors');           // ✅ ADD THIS
+const cors = require('cors');           
 const mongoose = require('mongoose');
-const Task = require('./models/Task');
+const Task = require('/models/Task.js');
 
 const app = express();
-const PORT = 5001;
+const PORT = process.env.PORT || 5001;
 
-app.use(cors());                        // ✅ ADD THIS
+app.use(cors());                       
 app.use(express.json());
 
 
 // MongoDB connection
-mongoose.connect('mongodb+srv://felmonon:HXKmKYIB42knaPru@taskuser.yeivmz5.mongodb.net/taskDB?retryWrites=true&w=majority&appName=taskuser', {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -66,8 +69,6 @@ app.delete('/api/tasks/:id', async (req, res) => {
     res.status(500).json({ error: 'Failed to delete task' });
   }
 });
-
-
 
 
 
